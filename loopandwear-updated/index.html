@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop &amp; Wear — Handknit Sweaters with Love</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:wght@300;400;500&amp;display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #FAF7F2; --warm: #F5EDE0; --tan: #E8D5BC; --brown: #8B6240;
+    --dark-brown: #4A2F1A; --accent: #C4714A; --accent-light: #F0D5C4;
+    --text: #2C1F14; --muted: #7A6555; --white: #FFFFFF;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--cream); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: sticky; top: 0; z-index: 100; background: rgba(250,247,242,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid var(--tan); padding: 0 5%; display: flex; align-items: center; justify-content: space-between; height: 68px; }
+  .logo { font-family: var(--font-display); font-size: 1.5rem; color: var(--dark-brown); text-decoration: none; letter-spacing: -0.02em; }
+  .logo span { color: var(--accent); font-style: italic; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.03em; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--accent); color: var(--white) !important; padding: 0.5rem 1.2rem; border-radius: 50px; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--dark-brown) !important; }
+
+  /* HERO */
+  .hero { min-height: 92vh; display: grid; grid-template-columns: 1fr 1fr; align-items: center; padding: 0 5%; gap: 4rem; position: relative; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -10%; right: -5%; width: 55%; height: 110%; background: var(--warm); border-radius: 40% 0 0 30%; z-index: 0; }
+  .hero-text { position: relative; z-index: 1; }
+  .hero-badge { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem; }
+  .hero h1 { font-family: var(--font-display); font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.12; color: var(--dark-brown); margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+  .hero h1 em { color: var(--accent); font-style: italic; }
+  .hero p { font-size: 1.1rem; color: var(--muted); max-width: 480px; margin-bottom: 2rem; line-height: 1.75; }
+  .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--accent); color: var(--white); padding: 0.9rem 2rem; border-radius: 50px; text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: background 0.2s, transform 0.15s; display: inline-block; }
+  .btn-primary:hover { background: var(--dark-brown); transform: translateY(-1px); }
+  .btn-secondary { background: transparent; color: var(--dark-brown); padding: 0.9rem 2rem; border-radius: 50px; border: 1.5px solid var(--tan); text-decoration: none; font-weight: 500; font-size: 0.95rem; transition: border-color 0.2s, background 0.2s; display: inline-block; }
+  .btn-secondary:hover { border-color: var(--accent); background: var(--accent-light); }
+  .hero-image { position: relative; z-index: 1; }
+  .hero-image-box { border-radius: 30% 60% 55% 30% / 30% 35% 60% 55%; aspect-ratio: 4/5; overflow: hidden; position: relative; }
+  .hero-image-box img { width: 100%; height: 100%; object-fit: contain; background: var(--warm); }
+  .hero-stats { position: absolute; bottom: -1.5rem; left: -1.5rem; background: var(--white); border-radius: 16px; padding: 1rem 1.4rem; box-shadow: 0 4px 24px rgba(139,98,64,0.15); }
+  .hero-stats p { font-size: 0.78rem; color: var(--muted); }
+  .hero-stats strong { font-family: var(--font-display); font-size: 1.4rem; color: var(--accent); display: block; }
+
+  /* STORY BANNER */
+  .story-banner { background: var(--dark-brown); color: var(--cream); padding: 2rem 5%; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+  .story-banner-icon { font-size: 2.5rem; }
+  .story-banner h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 400; margin-bottom: 0.25rem; }
+  .story-banner p { font-size: 0.9rem; opacity: 0.8; max-width: 700px; }
+
+  /* SECTION STYLES */
+  .section-label { font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.75rem; }
+  .section-heading { font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--dark-brown); line-height: 1.2; margin-bottom: 1.2rem; letter-spacing: -0.02em; }
+  .section-heading em { color: var(--accent); font-style: italic; }
+  .section-body { color: var(--muted); line-height: 1.8; font-size: 1rem; margin-bottom: 1.2rem; }
+
+  /* OUR STORY */
+  .our-story { padding: 6rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .story-visual { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .story-card { background: var(--warm); border-radius: 20px; padding: 2rem 1.5rem; text-align: center; }
+  .story-card:first-child { grid-column: 1 / -1; background: var(--accent-light); }
+  .story-card .icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .story-card h4 { font-family: var(--font-display); font-size: 1rem; color: var(--dark-brown); margin-bottom: 0.3rem; }
+  .story-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+  .quote-block { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; }
+  .quote-block p { font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--brown); line-height: 1.6; }
+
+  /* PRODUCTS */
+  .products { padding: 5rem 5%; background: var(--warm); }
+  .products-header { text-align: center; max-width: 600px; margin: 0 auto 3rem; }
+  .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+  .product-card { background: var(--white); border-radius: 20px; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; cursor: pointer; }
+  .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(139,98,64,0.15); }
+  .product-thumb { aspect-ratio: 4/3; overflow: hidden; position: relative; background: var(--warm); }
+  .product-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .product-card:hover .product-thumb img { transform: scale(1.05); }
+  .product-badge { position: absolute; top: 1rem; right: 1rem; background: var(--accent); color: var(--white); font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.8rem; border-radius: 50px; z-index: 1; }
+  .product-info { padding: 1.2rem 1.4rem; }
+  .product-info h3 { font-family: var(--font-display); font-size: 1.1rem; color: var(--dark-brown); margin-bottom: 0.4rem; }
+  .product-info p { font-size: 0.85rem; color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
+  .product-footer { display: flex; align-items: center; justify-content: space-between; }
+  .price { font-size: 1.2rem; font-weight: 500; color: var(--accent); }
+  .add-btn { background: var(--accent-light); color: var(--accent); border: none; padding: 0.5rem 1.1rem; border-radius: 50px; font-size: 0.85rem; font-weight: 500; cursor: pointer; font-family: var(--font-body); transition: background 0.2s, color 0.2s; }
+  .add-btn:hover { background: var(--accent); color: var(--white); }
+
+  /* PROCESS */
+  .process { padding: 5rem 5%; background: var(--dark-brown); color: var(--cream); text-align: center; }
+  .process .section-heading { color: var(--cream); }
+  .process .section-label { color: var(--tan); }
+  .process-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .step-num { font-family: var(--font-display); font-size: 3rem; color: var(--accent); opacity: 0.5; line-height: 1; margin-bottom: 1rem; }
+  .step-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+  .process-step h4 { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; color: var(--cream); margin-bottom: 0.5rem; }
+  .process-step p { font-size: 0.85rem; color: var(--tan); line-height: 1.6; }
+
+  /* CUSTOM ORDER */
+  .custom-order { padding: 6rem 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+  .custom-features { list-style: none; margin: 1.5rem 0 2rem; }
+  .custom-features li { display: flex; align-items: flex-start; gap: 0.8rem; margin-bottom: 1rem; font-size: 0.95rem; color: var(--muted); }
+  .custom-features li::before { content: '✦'; color: var(--accent); font-size: 0.7rem; margin-top: 0.25rem; flex-shrink: 0; }
+  .order-form { background: var(--warm); border-radius: 24px; padding: 2.5rem; }
+  .order-form h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--dark-brown); margin-bottom: 1.5rem; }
+  .form-group { margin-bottom: 1.1rem; }
+  .form-group label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--brown); margin-bottom: 0.4rem; letter-spacing: 0.03em; }
+  .form-group input, .form-group select, .form-group textarea { width: 100%; background: var(--white); border: 1.5px solid var(--tan); border-radius: 10px; padding: 0.7rem 1rem; font-family: var(--font-body); font-size: 0.9rem; color: var(--text); outline: none; transition: border-color 0.2s; resize: vertical; }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--accent); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-submit { width: 100%; background: var(--accent); color: var(--white); border: none; padding: 0.9rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.95rem; font-weight: 500; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+  .form-submit:hover { background: var(--dark-brown); }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 5rem 5%; }
+  .testimonials-header { text-align: center; max-width: 500px; margin: 0 auto 3rem; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .testimonial-card { background: var(--warm); border-radius: 20px; padding: 1.8rem; }
+  .stars { color: var(--accent); font-size: 1rem; margin-bottom: 0.8rem; letter-spacing: 0.1em; }
+  .testimonial-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; }
+  .reviewer { display: flex; align-items: center; gap: 0.75rem; }
+  .reviewer-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 500; }
+  .reviewer-name { font-size: 0.88rem; font-weight: 500; color: var(--dark-brown); }
+  .reviewer-loc { font-size: 0.78rem; color: var(--muted); }
+
+  /* ABOUT SECTION */
+  .about { padding: 6rem 5%; background: var(--accent-light); }
+  .about-header { text-align: center; margin-bottom: 3.5rem; }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: stretch; }
+  .about-card { background: var(--white); border-radius: 24px; overflow: hidden; box-shadow: 0 4px 24px rgba(139,98,64,0.1); }
+  .about-card-photo { aspect-ratio: 4/3; overflow: hidden; }
+  .about-card-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center center; transition: transform 0.4s; }
+  .about-card-photo img.full-photo { object-fit: contain; background: var(--warm); }
+  .about-card:hover .about-card-photo img { transform: scale(1.03); }
+  .about-card-body { padding: 1.8rem 2rem; }
+  .about-card-tag { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.9rem; border-radius: 50px; margin-bottom: 0.8rem; }
+  .about-card h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--dark-brown); margin-bottom: 0.8rem; }
+  .about-card p { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 0.8rem; }
+  .about-feeling { display: flex; align-items: center; gap: 0.6rem; margin-top: 1rem; padding: 0.8rem 1rem; background: var(--warm); border-radius: 12px; font-size: 0.88rem; color: var(--brown); font-weight: 500; }
+
+  /* FOUNDER */
+  .founder-text .tag { background: var(--accent); color: var(--white); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 50px; display: inline-block; margin-bottom: 1rem; }
+
+  /* FAQ */
+  .faq { padding: 5rem 5%; max-width: 800px; margin: 0 auto; }
+  .faq-item { border-bottom: 1px solid var(--tan); padding: 1.4rem 0; }
+  .faq-q { font-size: 1rem; font-weight: 500; color: var(--dark-brown); cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 1rem; list-style: none; user-select: none; }
+  .faq-q::after { content: '+'; color: var(--accent); font-size: 1.3rem; transition: transform 0.2s; }
+  details[open] .faq-q::after { content: '−'; }
+  .faq-a { font-size: 0.92rem; color: var(--muted); line-height: 1.75; padding-top: 0.8rem; }
+
+  /* FOOTER */
+  footer { background: var(--dark-brown); color: var(--cream); padding: 3rem 5% 2rem; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 3rem; padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2rem; }
+  .footer-brand .logo-footer { font-family: var(--font-display); font-size: 1.6rem; color: var(--cream); margin-bottom: 0.75rem; }
+  .footer-brand .logo-footer span { color: var(--accent); font-style: italic; }
+  .footer-brand p { font-size: 0.85rem; color: var(--tan); line-height: 1.7; max-width: 300px; }
+  .footer-col h4 { font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tan); margin-bottom: 1rem; }
+  .footer-col ul { list-style: none; }
+  .footer-col li { margin-bottom: 0.5rem; }
+  .footer-col a { color: rgba(250,247,242,0.7); text-decoration: none; font-size: 0.88rem; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--accent); }
+  .footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: rgba(250,247,242,0.5); flex-wrap: wrap; gap: 0.5rem; }
+  .heart { color: var(--accent); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 3rem; min-height: auto; padding-bottom: 3rem; }
+    .hero::before { display: none; }
+    .hero-image { display: none; }
+    .our-story, .custom-order { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-text > * { animation: fadeUp 0.6s ease both; }
+  .hero-text > *:nth-child(1) { animation-delay: 0.1s; }
+  .hero-text > *:nth-child(2) { animation-delay: 0.2s; }
+  .hero-text > *:nth-child(3) { animation-delay: 0.35s; }
+  .hero-text > *:nth-child(4) { animation-delay: 0.45s; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Loop <span>&amp;</span> Wear</a>
+  <ul class="nav-links">
+    <li><a href="#story">Our Story</a></li>
+    <li><a href="#sweaters">Collection</a></li>
+    <li><a href="#custom">Custom Order</a></li>
+    <li><a href="#custom" class="nav-cta">Order Now</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-badge">✦ Handknit with love from India</span>
+    <h1>Every Stitch<br>Tells a <em>Story</em></h1>
+    <p>My grandma moved from India and knitting is her passion. Each piece she makes carries warmth, patience, and decades of love — made just for your family.</p>
+    <div class="hero-buttons">
+      <a href="#sweaters" class="btn-primary">Shop Collection</a>
+      <a href="#custom" class="btn-secondary">Custom Order</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-image-box">
+      <img src="Nani_.jpeg" alt="Nani knitting with love">
+    </div>
+    <div class="hero-stats">
+      <strong>100%</strong>
+      <p>Handmade with love</p>
+    </div>
+  </div>
+</section>
+
+<!-- STORY BANNER -->
+<div class="story-banner">
+  <div class="story-banner-icon">🧶</div>
+  <div>
+    <h3>A Teen's Mission — Help Nani Thrive</h3>
+    <p>When Nani moved from India and felt lonely, I found a way to help: turn her lifelong passion for knitting into a small business that keeps her joyful, busy, and connected to our community.</p>
+  </div>
+</div>
+
+<!-- OUR STORY -->
+<section class="our-story" id="story">
+  <div>
+    <p class="section-label">Our Story</p>
+    <h2 class="section-heading">From India to Your <em>Doorstep</em></h2>
+    <p class="section-body">My name is Ayaan (I'm a junior in high school), and this is Nani's story as much as it's mine. When she came to live with us from India, the transition was hard. New country, new language, far from friends.</p>
+    <p class="section-body">Knitting was always her therapy. I thought — what if her hobby could become her purpose here? What if the same hands that kept our family warm could warm our whole community?</p>
+    <div class="quote-block">
+      <p>"When I knit, I feel at home anywhere in the world. Each piece is a little piece of my heart."</p>
+    </div>
+    <p class="section-body">So Loop &amp; Wear was born — a teen entrepreneur project powered by Nani's skilled hands and my belief that community + craft = something beautiful.</p>
+  </div>
+  <div class="story-visual">
+    <div class="story-card">
+      <div class="icon">🇮🇳 → 🇺🇸</div>
+      <h4>From India with Love</h4>
+      <p>Nani brings 40+ years of traditional knitting techniques from India to every piece she creates</p>
+    </div>
+    <div class="story-card">
+      <div class="icon">🧓</div>
+      <h4>Nani's Hands</h4>
+      <p>Every stitch is hand-crafted with patience and expertise</p>
+    </div>
+    <div class="story-card">
+      <div class="icon">👦</div>
+      <h4>Teen Entrepreneur</h4>
+      <p>A high school junior building a real business with heart</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTION -->
+<section class="products" id="sweaters">
+  <div class="products-header">
+    <p class="section-label">The Collection</p>
+    <h2 class="section-heading">Nani's <em>Handknit</em> Creations</h2>
+    <p style="color:var(--muted); font-size:0.95rem;">Each piece is one-of-a-kind. No factories. No shortcuts. Just Nani, her needles, and her love.</p>
+  </div>
+  <div class="products-grid">
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_mufflars_1.jpg" alt="Handknit Mufflar">
+        <span class="product-badge">Bestseller</span>
+      </div>
+      <div class="product-info">
+        <h3>Handknit Mufflar</h3>
+        <p>A gorgeous hand-knit mufflar in vibrant pink &amp; purple tones with beautiful fringe detail. Perfect for chilly days.</p>
+        <div class="product-footer">
+          <span class="price">From $20</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_shwal_1.jpg" alt="Handknit Shawl / Cowl">
+        <span class="product-badge">Popular</span>
+      </div>
+      <div class="product-info">
+        <h3>Knit Cowl / Shawl</h3>
+        <p>A beautiful pink &amp; blush cowl-style shawl — elegant, warm, and versatile. Wraps around the neck or shoulders.</p>
+        <div class="product-footer">
+          <span class="price">From $35</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_cap_1.jpg" alt="Handknit Cap">
+      </div>
+      <div class="product-info">
+        <h3>Handknit Cap / Beanie</h3>
+        <p>A cozy pom-pom beanie in cream, olive, and plum — classic Fair Isle inspired pattern. Warm and stylish.</p>
+        <div class="product-footer">
+          <span class="price">From $20</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_leg_warmers_1.jpg" alt="Leg Warmers">
+        <span class="product-badge">New</span>
+      </div>
+      <div class="product-info">
+        <h3>Leg Warmers &amp; Socks Set</h3>
+        <p>Vibrant green striped leg warmers paired with patterned socks — cozy and playful, perfect for kids and adults.</p>
+        <div class="product-footer">
+          <span class="price">From $30</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_Socks_1.jpg" alt="Handknit Socks">
+      </div>
+      <div class="product-info">
+        <h3>Handknit Socks</h3>
+        <p>Super soft striped socks in warm brown &amp; cream tones. Hand-knit with care — your feet will thank you!</p>
+        <div class="product-footer">
+          <span class="price">From $20</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_3.jpg" alt="Fair Isle Sweater">
+        <span class="product-badge">Signature</span>
+      </div>
+      <div class="product-info">
+        <h3>Fair Isle Sweater</h3>
+        <p>A stunning colorful Fair Isle pattern sweater — bold geometric designs in red, gold, green and blue. A true statement piece.</p>
+        <div class="product-footer">
+          <span class="price">From $45</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_2.jpg" alt="Granny Square Top">
+      </div>
+      <div class="product-info">
+        <h3>Crochet Granny Top</h3>
+        <p>A boho-style crochet top in earthy peach, teal, and blush tones. Light, airy, and lovingly handmade.</p>
+        <div class="product-footer">
+          <span class="price">From $40</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-thumb">
+        <img src="Home_Knit_1.jpg" alt="Colorblock Sweater">
+      </div>
+      <div class="product-info">
+        <h3>Colorblock Sweater</h3>
+        <p>A vibrant patchwork-style crochet sweater bursting with color. Bold, joyful, and completely one-of-a-kind.</p>
+        <div class="product-footer">
+          <span class="price">From $45</span>
+          <button class="add-btn">Inquire</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-card" style="border: 2px dashed var(--tan);">
+      <div class="product-thumb" style="background: var(--warm); display:flex; align-items:center; justify-content:center; font-size:3rem;">✦</div>
+      <div class="product-info">
+        <h3>Custom Creation</h3>
+        <p>Your vision, Nani's hands. Tell us your colors, size, and style — she'll knit something just for you.</p>
+        <div class="product-footer">
+          <span class="price">Custom</span>
+          <button class="add-btn" onclick="document.getElementById('custom').scrollIntoView({behavior:'smooth'})">Design It</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <p class="section-label" style="color:var(--tan)">How it Works</p>
+  <h2 class="section-heading">Made <em style="color:var(--accent)">with Care</em>, Every Step</h2>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-num">01</div>
+      <div class="step-icon">💬</div>
+      <h4>You Reach Out</h4>
+      <p>Tell us what you're looking for — size, color, style, occasion. We discuss and plan together.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">02</div>
+      <div class="step-icon">🧶</div>
+      <h4>Nani Begins Knitting</h4>
+      <p>Nani selects the best yarn and starts crafting your piece with patience and love.</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">03</div>
+      <div class="step-icon">📸</div>
+      <h4>Progress Updates</h4>
+      <p>We send you photos as your piece takes shape — it's exciting to watch it come to life!</p>
+    </div>
+    <div class="process-step">
+      <div class="step-num">04</div>
+      <div class="step-icon">📦</div>
+      <h4>Delivered with Love</h4>
+      <p>Your piece arrives carefully packed with a handwritten note from Nani.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CUSTOM ORDER -->
+<section class="custom-order" id="custom">
+  <div>
+    <p class="section-label">Custom Orders</p>
+    <h2 class="section-heading">Made Just<br><em>For You</em></h2>
+    <p class="section-body">Every person deserves a piece that fits perfectly and feels personal. Nani takes custom requests with great joy — it gives her purpose and connection.</p>
+    <ul class="custom-features">
+      <li>Choose your own colors and yarn type</li>
+      <li>Any size from toddler to adult XL</li>
+      <li>Sweaters, mufflars, shawls, socks, caps, leg warmers &amp; more</li>
+      <li>Personalized details like initials or special patterns</li>
+      <li>Perfect as a gift — include a message for the recipient</li>
+      <li>Typical turnaround: 2–4 weeks depending on complexity</li>
+    </ul>
+    <p style="font-size:0.85rem; color:var(--muted);">📍 Based in the Bay Area, CA — local pickup available. Ships nationwide.</p>
+  </div>
+  <div class="order-form">
+    <h3>Request a Custom Order</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" placeholder="Jane Smith">
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="jane@email.com">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Item Type</label>
+        <select>
+          <option>Sweater / Pullover</option>
+          <option>Mufflar / Scarf</option>
+          <option>Shawl / Cowl</option>
+          <option>Cap / Beanie</option>
+          <option>Socks</option>
+          <option>Leg Warmers</option>
+          <option>Surprise me!</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Size</label>
+        <select>
+          <option>Kids (2–4)</option>
+          <option>Kids (5–8)</option>
+          <option>Kids (9–12)</option>
+          <option>Adult XS/S</option>
+          <option>Adult M/L</option>
+          <option>Adult XL/2XL</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Preferred Colors</label>
+      <input type="text" placeholder="e.g. earthy tones, navy blue, bright colors...">
+    </div>
+    <div class="form-group">
+      <label>Special Requests / Notes</label>
+      <textarea rows="3" placeholder="Any special patterns, occasion, or personal touches you'd like..."></textarea>
+    </div>
+    <button class="form-submit" onclick="alert('Thank you! Ayaan will get back to you within 24 hours 🧶')">Send Custom Order Request →</button>
+    <p style="font-size:0.76rem; color:var(--muted); text-align:center; margin-top:0.8rem;">Call or text 408-726-1512 to arrange payment — since every piece is personalized, we confirm the details with you directly.</p>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="testimonials-header">
+    <p class="section-label">Community Love</p>
+    <h2 class="section-heading">What Neighbors Are <em>Saying</em></h2>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"This mufflar brought back the most beautiful memories — my mom used to knit ones just like this for me when I was little. The quality is incredible and it feels like a warm hug. So grateful I found this!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">M</div>
+        <div>
+          <div class="reviewer-name">Maya</div>
+          <div class="reviewer-loc">San Jose, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"The cowl I ordered is absolutely stunning — the quality is better than anything I've bought in a store. You can feel the care in every stitch. Ayaan was so responsive and Nani even included a little note. Will definitely order again!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">J</div>
+        <div>
+          <div class="reviewer-name">Jennie</div>
+          <div class="reviewer-loc">Fremont, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"Ordered the colorblock sweater as a birthday gift and my friend was blown away. Completely unique, beautifully made, and such a heartwarming story behind it. What an amazing young entrepreneur — so proud of Ayaan!"</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">R</div>
+        <div>
+          <div class="reviewer-name">Riya</div>
+          <div class="reviewer-loc">Palo Alto, CA</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">★★★★★</div>
+      <p>"When I unwrapped the shawl, I just froze — it looked exactly like ones my mom used to knit us every winter growing up. Nani's craftsmanship is the real deal. This is handmade love and I'll be ordering for the whole family."</p>
+      <div class="reviewer">
+        <div class="reviewer-avatar">P</div>
+        <div>
+          <div class="reviewer-name">Priya</div>
+          <div class="reviewer-loc">Sunnyvale, CA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT: NANI & AYAAN -->
+<section class="about" id="about">
+  <div class="about-header">
+    <p class="section-label">The People Behind Every Stitch</p>
+    <h2 class="section-heading">Meet <em>Nani &amp; Ayaan</em></h2>
+    <p style="color:var(--muted); max-width:580px; margin:0 auto; font-size:0.97rem;">Two generations, one mission — bringing handmade warmth and love to our community.</p>
+  </div>
+  <div class="about-grid">
+
+    <!-- NANI -->
+    <div class="about-card">
+      <div class="about-card-photo">
+        <img src="Nani_.jpeg" alt="Nani knitting with love" class="full-photo">
+      </div>
+      <div class="about-card-body">
+        <span class="about-card-tag">The Artist</span>
+        <h3>Nani — The Heart of Loop &amp; Wear</h3>
+        <p>Nani has been knitting for over 40 years, learning the craft in India where handmade textiles are woven into everyday life. When she moved to the US, knitting became her anchor — a piece of home she carried with her.</p>
+        <p>Through Loop &amp; Wear, Nani has found her community here. She loves knowing that each piece she creates brings warmth to a new family, and that her lifelong skill is now connecting her with neighbors she'd never have met otherwise.</p>
+        <div class="about-feeling">
+          <span>💛</span>
+          <span>"I feel connected, useful, and happy. Every order makes my day."</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- AYAAN & NANI TOGETHER -->
+    <div class="about-card">
+      <div class="about-card-photo">
+        <img src="Me_and_Nani.jpeg" alt="Ayaan and Nani together">
+      </div>
+      <div class="about-card-body">
+        <span class="about-card-tag">Teen Entrepreneur</span>
+        <h3>Ayaan — The Business Mind</h3>
+        <p>I'm a high school junior who started Loop &amp; Wear with one goal: help Nani feel at home in a new country by turning her passion into purpose. I handle everything from the website to customer orders to marketing.</p>
+        <p>Running this business has taught me more than any class could — about entrepreneurship, community, and what it means to give back. Seeing Nani light up when an order comes in makes every late night worth it.</p>
+        <div class="about-feeling">
+          <span>🚀</span>
+          <span>"I feel accomplished — growing a real business while giving back to family and community."</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div style="text-align:center; max-width:500px; margin: 0 auto 3rem;">
+    <p class="section-label">FAQ</p>
+    <h2 class="section-heading">Questions? <em>We've got answers.</em></h2>
+  </div>
+  <details class="faq-item">
+    <summary class="faq-q">How long does a custom order take?</summary>
+    <p class="faq-a">Typically 2–4 weeks depending on complexity and Nani's current queue. Simple items like socks or mufflars can be done in 1–2 weeks. We'll give you an estimate when you place your order.</p>
+  </details>
+  <details class="faq-item">
+    <summary class="faq-q">What yarn do you use?</summary>
+    <p class="faq-a">Nani uses high-quality wool and acrylic blends — warm, durable, and soft. For kids or those with sensitivities, we have hypoallergenic yarn options. Just let us know!</p>
+  </details>
+  <details class="faq-item">
+    <summary class="faq-q">Do you ship outside California?</summary>
+    <p class="faq-a">Yes! We ship anywhere in the US. Local Bay Area customers can also arrange pickup. International shipping is available — contact us for rates.</p>
+  </details>
+  <details class="faq-item">
+    <summary class="faq-q">How do I pay?</summary>
+    <p class="faq-a">Since every piece is personalized, call or text us at 408-726-1512 to arrange payment. We accept Venmo, Zelle, or PayPal.</p>
+  </details>
+  <details class="faq-item">
+    <summary class="faq-q">Can I return or exchange?</summary>
+    <p class="faq-a">Because each piece is handmade to order, we can't offer refunds — but if something isn't right, we'll fix it. Customer satisfaction means everything to us.</p>
+  </details>
+  <details class="faq-item">
+    <summary class="faq-q">Can I give this as a gift?</summary>
+    <p class="faq-a">Absolutely — it's one of the most heartfelt gifts you can give. We include a handwritten note from Nani with every order and can gift-wrap upon request.</p>
+  </details>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="logo-footer">Loop <span>&amp;</span> Wear</div>
+      <p>Handknit creations made with love by Nani — a teen entrepreneur project by Ayaan, helping his grandmother share her gift with the whole community.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#sweaters">All Items</a></li>
+        <li><a href="#sweaters">Sweaters</a></li>
+        <li><a href="#sweaters">Mufflars &amp; Shawls</a></li>
+        <li><a href="#sweaters">Socks &amp; Caps</a></li>
+        <li><a href="#custom">Custom Orders</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#story">Our Story</a></li>
+        <li><a href="#custom">Contact Us</a></li>
+        <li><a href="#">Shipping Info</a></li>
+        <li><a href="#">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Loop &amp; Wear · loopandwear.com</span>
+    <span>Made with <span class="heart">♥</span> by Ayaan, for Nani</span>
+  </div>
+</footer>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;848805817ee14a88b4ea3c99d468c3f2&quot;,&quot;r&quot;:1,&quot;spa&quot;:2}" crossorigin="anonymous"></script>
+
+
+</body></html>
